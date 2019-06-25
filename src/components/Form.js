@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Input, Label, Grid, Button } from 'semantic-ui-react';
-import { PrimaryPurple, Green } from '../constants/AppColors';
+import { Input, Button } from 'semantic-ui-react';
+import { PrimaryPurple, Green, Danger } from '../constants/AppColors';
 
 const Wrapper = styled.div`
   .ui.label > .icon {
@@ -19,6 +19,10 @@ const Wrapper = styled.div`
       color: ${Green}!important;
       box-shadow: 0 0 0 1px ${Green} inset;
     }
+    &.danger {
+      color: ${Danger}!important;
+      box-shadow: 0 0 0 1px ${Danger} inset;
+    }
   }
 `;
 const Form = props => {
@@ -32,7 +36,11 @@ const Form = props => {
       </div>
 
       <Button>Add</Button>
+      {/* <Button>New Player</Button> */}
       <Button basic>Start</Button>
+      {/* <Button basic className="danger">
+        End Game
+      </Button> */}
     </Wrapper>
   );
 };

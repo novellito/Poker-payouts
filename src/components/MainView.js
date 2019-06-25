@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Form from './Form';
-import { Grid, Container } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 const Wrapper = styled.div``;
 const MainView = props => {
