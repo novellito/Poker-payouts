@@ -24,6 +24,13 @@ const Wrapper = styled.div`
       box-shadow: 0 0 0 1px ${Danger} inset;
     }
   }
+  .player-name,
+  .buyin-amt {
+    margin-bottom: 20px;
+  }
+  .add-btn {
+    margin-right: 10px;
+  }
 `;
 const Form = props => {
   return (
@@ -35,7 +42,7 @@ const Form = props => {
         <Input label={{ icon: 'dollar' }} type="number" placeholder="Amount" />
       </div>
 
-      <Button>Add</Button>
+      <Button className="add-btn">Add</Button>
       {/* <Button>New Player</Button> */}
       <Button basic>Start</Button>
       {/* <Button basic className="danger">

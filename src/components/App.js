@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <>
         <Navbar />
-        <img src={logo} className="react-logo" alt="logo" />
+        {/* <img src={logo} className="react-logo" alt="logo" /> */}
         <Switch>
           <Route exact path="/" component={MainView} />
           {/* <Route exact path="/payouts" component={Payouts} />
