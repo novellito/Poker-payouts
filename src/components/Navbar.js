@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import Logo from '../assets/PokerLogo.png';
@@ -78,7 +78,13 @@ const Wrapper = styled.nav`
 
   .menu-btn {
     display: none;
+    ~ .menu {
+      position: relative;
+      z-index: -1;
+    }
     :checked ~ .menu {
+      position: relative;
+      z-index: 1;
       max-height: 240px;
     }
     :checked ~ .menu-icon .navicon {
@@ -125,26 +131,56 @@ const Wrapper = styled.nav`
 `;
 
 const Navbar = props => {
+  const menuBtnRef = useRef();
+  const menuRef = useRef();
+
+  const test = e => {
+    console.log(e.target.parentNode);
+    console.log(e.target);
+    // console.log(e.target.checked);
+    // e.target.parentNode.blur();
+    menuBtnRef.current.checked = false;
+    e.target.parentNode.style = 'visibility:hidden;';
+    setTimeout(() => {
+      console.log('wowwowo', e.target);
+      e.target.parentNode.style = 'visibility:visible;';
+    }, 500);
+    // e.target.style = 'display:none;';
+    console.log(menuRef);
+    // menuRef.current.style = 'max-height:0;';
+  };
+
   return (
     <Wrapper id="navbar">
       <NavLink exact activeClassName="nav-active" to="/">
         <img src={Logo} alt="Poker tracker logo" />
       </NavLink>
-      <input className="menu-btn" type="checkbox" id="menu-btn" />
+      <input
+        ref={menuBtnRef}
+        className="menu-btn"
+        type="checkbox"
+        id="menu-btn"
+        // onChange={test}
+      />
       <label className="menu-icon" htmlFor="menu-btn">
         <span className="navicon" />
       </label>
-      <ul className="menu">
+      <ul ref={menuRef} className="menu">
         <li>
           <a href="#work">Reset Game</a>
         </li>
         <li>
-          <NavLink exact activeClassName="nav-active" to="/help">
+          <NavLink exact activeClassName="nav-active" to="/help" onClick={test}>
             Help
           </NavLink>
         </li>
         <li>
-          <NavLink exact activeClassName="nav-active" to="/about">
+          <NavLink
+            exact
+            activeClassName="nav-active"
+            to="/about"
+            onClick={test}
+          >
             About
           </NavLink>
         </li>
