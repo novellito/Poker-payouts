@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import MainView from './MainView';
 import logo from '../assets/logo.svg';
 import './App.css';
-import NavbarTest from './NavbarTest';
 import Navbar from './Navbar';
 import Help from './Help';
 import About from './About';
@@ -11,7 +10,6 @@ class App extends Component {
   render() {
     return (
       <>
-        <NavbarTest />
         <Navbar />
         {/* <img src={logo} className="react-logo" alt="logo" /> */}
         <Switch>

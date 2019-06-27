@@ -7,27 +7,56 @@ import { Menu, Icon } from 'semantic-ui-react';
 
 const Wrapper = styled.nav`
   .ui.stackable.menu {
-    background-color: ${PrimaryPurple};
     border-radius: 0;
-    .item {
+    background-color: ${PrimaryPurple};
+    .mobile-nav > .item,
+    .desktop-nav > .item {
+      background-color: ${SecondaryPurple};
       color: white;
       display: flex;
       justify-content: center;
       font-family: 'Rubik', sans-serif;
       height: 65px;
       border-top: solid;
-      /* padding: 20px; */
-      &:not(:first-child) {
-        background-color: ${SecondaryPurple};
-      }
-      &:first-child {
-        border: none;
-        height: 80px;
-      }
+    }
+    .desktop-nav {
+      display: none;
     }
   }
-  .content.big.icon.hamburger {
+  .content.big.icon.nav-icon,
+  .close.big.icon.nav-icon {
     margin-left: auto;
+    font-size: 2.6em;
+    color: white;
+  }
+  .logo {
+    margin-left: 10px;
+  }
+
+  @media (min-width: 768px) {
+    .logo {
+      margin-left: 20px;
+    }
+    .ui.stackable.menu {
+      align-items: center;
+      .desktop-nav {
+        display: contents;
+        > .item {
+          background-color: inherit;
+          border: none;
+          :last-child {
+            margin-right: 20px;
+          }
+        }
+      }
+      .mobile-nav {
+        display: none;
+      }
+    }
+    .content.big.icon.nav-icon,
+    .close.big.icon.nav-icon {
+      display: none;
+    }
   }
 `;
 
@@ -38,55 +67,65 @@ const Navbar = props => {
     setHidden(!hidden);
   };
 
+  const NavLinks = (
+    <>
+      <Menu.Item position="right">Reset Game</Menu.Item>
+      <Menu.Item
+        name="desktop-navimonials"
+        as={() => (
+          <NavLink
+            exact
+            className="item"
+            activeClassName="nav-active"
+            to="/help"
+            onClick={hideElem}
+          >
+            Help
+          </NavLink>
+        )}
+      />
+      <Menu.Item
+        link
+        as={() => (
+          <NavLink
+            exact
+            className="item"
+            activeClassName="nav-active"
+            to="/about"
+            onClick={hideElem}
+          >
+            About
+          </NavLink>
+        )}
+      />
+    </>
+  );
+
   return (
     <Wrapper id="navbar">
       <Menu stackable>
         <Menu.Item>
           <NavLink exact to="/">
-            <img src={Logo} alt="Poker tracker logo" />
+            <img className="logo" src={Logo} alt="Poker tracker logo" />
           </NavLink>
-          <Icon
-            className="hamburger"
-            onClick={hideElem}
-            name="content"
-            size="big"
-          />
+          {hidden ? (
+            <Icon
+              className="nav-icon"
+              onClick={hideElem}
+              name="content"
+              size="big"
+            />
+          ) : (
+            <Icon
+              className="nav-icon"
+              onClick={hideElem}
+              name="close"
+              size="big"
+            />
+          )}
         </Menu.Item>
-        {hidden ? (
-          ''
-        ) : (
-          <>
-            <Menu.Item>Reset Game</Menu.Item>
-
-            <Menu.Item
-              name="testimonials"
-              as={() => (
-                <NavLink
-                  exact
-                  className="item"
-                  activeClassName="nav-active"
-                  to="/help"
-                  onClick={hideElem}
-                >
-                  Help
-                </NavLink>
-              )}
-            />
-            <Menu.Item
-              as={() => (
-                <NavLink
-                  exact
-                  className="item"
-                  activeClassName="nav-active"
-                  to="/about"
-                  onClick={hideElem}
-                >
-                  About
-                </NavLink>
-              )}
-            />
-          </>
-        )}
+        {hidden ? '' : <div className="mobile-nav">{NavLinks}</div>}
+        <div className="desktop-nav">{NavLinks}</div>
       </Menu>
     </Wrapper>
   );
