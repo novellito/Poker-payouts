@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Form from './Form';
 import { Grid } from 'semantic-ui-react';
+import Players from './Players/Players';
 
 const Wrapper = styled.div`
   .row.form {
@@ -22,6 +23,7 @@ const MainView = props => {
         <Grid.Row>
           <Grid.Column verticalAlign="middle">
             <p className="empty-player-text">Add 2 players to start the game</p>
+            <Players />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row className="form">
