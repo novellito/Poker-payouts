@@ -9,6 +9,9 @@ const Wrapper = styled.nav`
   .ui.stackable.menu {
     border-radius: 0;
     background-color: ${PrimaryPurple};
+    .item:first-child {
+      height: 88px;
+    }
     .mobile-nav > .item,
     .desktop-nav > .item {
       background-color: ${SecondaryPurple};
