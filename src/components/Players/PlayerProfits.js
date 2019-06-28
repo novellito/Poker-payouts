@@ -6,7 +6,7 @@ import {
   Danger,
   Green,
   TertiaryPurple
-} from '../constants/AppColors';
+} from '../../constants/AppColors';
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,7 +16,6 @@ const Wrapper = styled.div`
     font-size: 1.6em;
     margin: 0 10px;
     color: ${PrimaryPurple};
-    font-weight: bold;
   }
   .player-name {
     font-size: 1.9em;

@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Form from './Form';
 import { Grid } from 'semantic-ui-react';
 import Players from './Players/Players';
-import PlayerProfits from './PlayerProfits';
-import PlayerPayments from './PlayerPayments';
+import PlayerProfits from './Players/PlayerProfits';
+import PlayerPayments from './Players/PlayerPayments';
 const Wrapper = styled.div`
   .row.form {
     position: absolute;

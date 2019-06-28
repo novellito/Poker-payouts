@@ -15,6 +15,7 @@ const Wrapper = styled.div`
     width: 35px;
     height: 35px;
     border-radius: 50%;
+    font-weight: bold;
     font-size: 0.8em;
     color: ${PrimaryPurple};
     line-height: 32px;

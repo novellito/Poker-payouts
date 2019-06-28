@@ -31,6 +31,12 @@ const Wrapper = styled.div`
   .add-btn {
     margin-right: 10px;
   }
+  p {
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    position: relative;
+    right: 69px;
+  }
 `;
 const Form = props => {
   return (
@@ -39,7 +45,13 @@ const Form = props => {
         <Input label={{ icon: 'user' }} type="text" placeholder="Player Name" />
       </div>
       <div className="buyin-amt">
-        <Input label={{ icon: 'dollar' }} type="number" placeholder="Amount" />
+        {/* <p>Extra Buy In</p> */}
+        <Input
+          name="buyin"
+          label={{ icon: 'dollar' }}
+          type="number"
+          placeholder="Amount"
+        />
       </div>
 
       <Button className="add-btn">Add</Button>

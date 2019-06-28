@@ -6,7 +6,7 @@ import {
   Danger,
   Green,
   TertiaryPurple
-} from '../constants/AppColors';
+} from '../../constants/AppColors';
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,6 +26,7 @@ const Wrapper = styled.div`
     position: relative;
     bottom: 10px;
     margin: 0 5px;
+    font-weight: bold;
   }
   p {
     margin-bottom: 0;
