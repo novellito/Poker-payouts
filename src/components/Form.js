@@ -44,6 +44,9 @@ const Form = props => {
 
       <Button className="add-btn">Add</Button>
       {/* <Button>New Player</Button> */}
+      {/* <Button className="danger" basic>
+        Cancel
+      </Button> */}
       <Button basic>Start</Button>
       {/* <Button basic className="danger">
         End Game

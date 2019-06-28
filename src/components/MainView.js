@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import Form from './Form';
 import { Grid } from 'semantic-ui-react';
 import Players from './Players/Players';
-
+import PlayerProfits from './PlayerProfits';
+import PlayerPayments from './PlayerPayments';
 const Wrapper = styled.div`
   .row.form {
     position: absolute;
@@ -23,7 +24,9 @@ const MainView = props => {
         <Grid.Row>
           <Grid.Column verticalAlign="middle">
             <p className="empty-player-text">Add 2 players to start the game</p>
-            <Players />
+            {/* <Players />
+            <PlayerProfits /> */}
+            <PlayerPayments />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row className="form">
