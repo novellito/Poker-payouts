@@ -29,7 +29,8 @@ const Wrapper = styled.div`
   .buyin-amt {
     margin-bottom: 20px;
   }
-  .add-btn {
+  .add-btn,
+  .new-player {
     margin-right: 10px;
   }
   p {
@@ -40,25 +41,25 @@ const Wrapper = styled.div`
 const Form = props => {
   const {
     players,
-    setUpdatingPlayer,
-    updatingPlayer,
+    setPlayerToUpdate,
+    playerToUpdate,
     gameStarted,
-    dispatch,
     setGameStarted,
     newPlayer,
-    setNewPlayer
+    setNewPlayer,
+    dispatch
   } = useContext(GameContext);
   const [playerName, setPlayerName] = useState('');
   const [buyInAmt, setBuyInAmt] = useState('');
 
   const addPlayer = () => {
-    if (updatingPlayer) {
+    if (playerToUpdate) {
       dispatch({
         type: 'UPDATE_BUYIN',
-        index: updatingPlayer.index,
+        index: playerToUpdate.index,
         buyIn: buyInAmt
       });
-      setUpdatingPlayer(null);
+      setPlayerToUpdate(null);
     } else {
       dispatch({
         type: 'ADD_PLAYER',
@@ -82,10 +83,10 @@ const Form = props => {
           />
         </div>
       )}
-      {(!gameStarted || updatingPlayer || newPlayer) && (
+      {(!gameStarted || playerToUpdate || newPlayer) && (
         <>
           <div className="buyin-amt">
-            {updatingPlayer && <p>Extra Buy In for {updatingPlayer.name}</p>}
+            {playerToUpdate && <p>Extra Buy In for {playerToUpdate.name}</p>}
             <Input
               value={buyInAmt}
               onChange={e => setBuyInAmt(e.target.value)}
@@ -95,21 +96,21 @@ const Form = props => {
               placeholder="Amount"
             />
           </div>
-
           <Button onClick={addPlayer} className="add-btn" disabled={!buyInAmt}>
             Add
           </Button>
         </>
       )}
-      {gameStarted && !updatingPlayer && !newPlayer && (
+      {gameStarted && !playerToUpdate && !newPlayer && (
         <>
-          <Button onClick={() => setNewPlayer(true)}>New Player</Button>
+          <Button className="new-player" onClick={() => setNewPlayer(true)}>
+            New Player
+          </Button>
           <Button basic className="danger">
             End Game
           </Button>
         </>
       )}
-
       {!gameStarted && (
         <Button
           onClick={() => setGameStarted(true)}
@@ -119,11 +120,10 @@ const Form = props => {
           Start
         </Button>
       )}
-
-      {(newPlayer || updatingPlayer) && (
+      {(newPlayer || playerToUpdate) && (
         <Button
           onClick={() => {
-            setUpdatingPlayer(null);
+            setPlayerToUpdate(null);
             setNewPlayer(false);
           }}
           basic

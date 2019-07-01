@@ -1,11 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Button, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { GameContext } from '../../context';
 import {
   PrimaryPurple,
   Danger,
-  Green,
   TertiaryPurple
 } from '../../constants/AppColors';
 const Wrapper = styled.div`
@@ -45,7 +44,7 @@ const Wrapper = styled.div`
 `;
 const Player = props => {
   const { buyIn, name, index } = props;
-  const { gameStarted, dispatch, setUpdatingPlayer } = useContext(GameContext);
+  const { gameStarted, dispatch, setPlayerToUpdate } = useContext(GameContext);
   return (
     <Wrapper>
       <Icon
@@ -56,7 +55,7 @@ const Player = props => {
       <div className="buy-in-amt">{buyIn}$</div>
       <p className="player-name">{name}</p>
       {gameStarted ? (
-        <Button onClick={() => setUpdatingPlayer({ ...props })} basic>
+        <Button onClick={() => setPlayerToUpdate({ ...props })} basic>
           + Buy In
         </Button>
       ) : (

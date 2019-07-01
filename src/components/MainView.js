@@ -19,32 +19,35 @@ const Wrapper = styled.div`
     font-size: 2.8em;
   }
 `;
-const reducer = (state, action) => {
+const playersReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_PLAYER':
       return [...state, action.player];
+
     case 'UPDATE_BUYIN':
       state[action.index].buyIn =
         parseInt(state[action.index].buyIn) + parseInt(action.buyIn);
+
       return [...state];
+
     case 'DELETE_PLAYER':
       const newState = [...state];
       newState.splice(action.index, 1);
+
       return newState;
     default:
       return state;
   }
 };
 const MainView = props => {
-  const [players, dispatch] = useReducer(reducer, [
+  const [players, dispatch] = useReducer(playersReducer, [
     { name: 'bob', buyIn: 12 },
     { name: 'lol', buyIn: 12 }
   ]);
-  // const [players, dispatch] = useReducer(reducer, []);
-  const [updatingPlayer, setUpdatingPlayer] = useState(null);
-
-  const [gameStarted, setGameStarted] = useState(false);
+  // const [players, dispatch] = useReducer(playersReducer, []);
+  const [playerToUpdate, setPlayerToUpdate] = useState(null);
   const [newPlayer, setNewPlayer] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
 
   return (
     <Wrapper>
@@ -52,8 +55,8 @@ const MainView = props => {
         value={{
           gameStarted,
           players,
-          updatingPlayer,
-          setUpdatingPlayer,
+          playerToUpdate,
+          setPlayerToUpdate,
           dispatch,
           setGameStarted,
           newPlayer,
