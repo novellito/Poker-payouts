@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
+import { GameContext } from '../../context';
 import {
   PrimaryPurple,
   Danger,
@@ -11,6 +12,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 10px;
   .buy-in-amt {
     width: 35px;
     height: 35px;
@@ -42,16 +44,29 @@ const Wrapper = styled.div`
   }
 `;
 const Player = props => {
+  const { buyIn, name, index } = props;
+  const { gameStarted, dispatch, setUpdatingPlayer } = useContext(GameContext);
+  const [updating, setUpdating] = useState(false);
   return (
     <Wrapper>
       <Icon
-        //   onClick={hideElem}
+        onClick={() => dispatch({ type: 'DELETE_PLAYER', index })}
         name="close"
         size="big"
       />
-      <div className="buy-in-amt">20$</div>
-      <p className="player-name">christian T.</p>
-      <Button basic>+ Buy In</Button>
+      <div className="buy-in-amt">{buyIn}$</div>
+      <p className="player-name">{name}</p>
+      {gameStarted ? (
+        <Button
+          onClick={() => setUpdatingPlayer({ ...props })}
+          //  onClick={() => dispatch({ type: 'UPDATE_BUYIN', index })}
+          basic
+        >
+          + Buy In
+        </Button>
+      ) : (
+        ''
+      )}
     </Wrapper>
   );
 };

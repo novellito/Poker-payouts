@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { Input, Button } from 'semantic-ui-react';
 import { PrimaryPurple, Green, Danger } from '../constants/AppColors';
+import { GameContext } from '../context';
 
 const Wrapper = styled.div`
   .ui.label > .icon {
@@ -39,14 +40,54 @@ const Wrapper = styled.div`
   }
 `;
 const Form = props => {
+  const {
+    players,
+    setUpdatingPlayer,
+    updatingPlayer,
+    gameStarted,
+    dispatch
+  } = useContext(GameContext);
+  const [playerName, setPlayerName] = useState('');
+  const [buyInAmt, setBuyInAmt] = useState('');
+
+  const addPlayer = () => {
+    if (updatingPlayer) {
+      dispatch({
+        type: 'UPDATE_BUYIN',
+        index: updatingPlayer.index,
+        buyIn: buyInAmt
+      });
+      setUpdatingPlayer(null);
+    } else {
+      dispatch({
+        type: 'ADD_PLAYER',
+        player: { name: playerName, buyIn: buyInAmt }
+      });
+    }
+    setPlayerName('');
+    setBuyInAmt('');
+  };
   return (
     <Wrapper>
-      <div className="player-name">
-        <Input label={{ icon: 'user' }} type="text" placeholder="Player Name" />
-      </div>
+      {!gameStarted ? (
+        // {gameStarted ? (
+        ''
+      ) : (
+        <div className="player-name">
+          <Input
+            value={playerName}
+            onChange={e => setPlayerName(e.target.value)}
+            label={{ icon: 'user' }}
+            type="text"
+            placeholder="Player Name"
+          />
+        </div>
+      )}
       <div className="buyin-amt">
-        {/* <p>Extra Buy In</p> */}
+        {updatingPlayer && <p>Extra Buy In</p>}
         <Input
+          value={buyInAmt}
+          onChange={e => setBuyInAmt(e.target.value)}
           name="buyin"
           label={{ icon: 'dollar' }}
           type="number"
@@ -54,15 +95,26 @@ const Form = props => {
         />
       </div>
 
-      <Button className="add-btn">Add</Button>
+      <Button onClick={addPlayer} className="add-btn" disabled={!buyInAmt}>
+        Add
+      </Button>
       {/* <Button>New Player</Button> */}
-      {/* <Button className="danger" basic>
-        Cancel
-      </Button> */}
-      <Button basic>Start</Button>
+
+      <Button disabled={players.length < 2} basic>
+        Start
+      </Button>
       {/* <Button basic className="danger">
         End Game
       </Button> */}
+      {updatingPlayer && (
+        <Button
+          onClick={() => setUpdatingPlayer(null)}
+          basic
+          className="danger"
+        >
+          Cancel
+        </Button>
+      )}
     </Wrapper>
   );
 };
