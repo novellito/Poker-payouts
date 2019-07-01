@@ -5,6 +5,7 @@ import { Grid } from 'semantic-ui-react';
 import Players from './Players/Players';
 import PlayerProfits from './Players/PlayerProfits';
 import PlayerPayments from './Players/PlayerPayments';
+import Modal from './Modal';
 import { GameContext } from '../context/index';
 
 const Wrapper = styled.div`
@@ -64,6 +65,7 @@ const MainView = props => {
         }}
       >
         <Grid centered container>
+          <Modal open={true} />
           <Grid.Row>
             <Grid.Column verticalAlign="middle">
               {players.length === 0 && (

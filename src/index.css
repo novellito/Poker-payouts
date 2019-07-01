@@ -17,3 +17,13 @@ html,
 body {
   height: 100%;
 }
+
+.ui.modal .actions > .button {
+  background-color: #51279b;
+  color: white;
+}
+.ui.modal .actions > .button:first-child {
+  background-color: white;
+  color: #e12d39 !important;
+  box-shadow: 0 0 0 1px #e12d39 inset;
+}
