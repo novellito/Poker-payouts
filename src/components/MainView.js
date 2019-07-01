@@ -36,9 +36,16 @@ const reducer = (state, action) => {
   }
 };
 const MainView = props => {
-  const [players, dispatch] = useReducer(reducer, []);
+  const [players, dispatch] = useReducer(reducer, [
+    { name: 'bob', buyIn: 12 },
+    { name: 'lol', buyIn: 12 }
+  ]);
+  // const [players, dispatch] = useReducer(reducer, []);
   const [updatingPlayer, setUpdatingPlayer] = useState(null);
-  const gameStarted = true;
+
+  const [gameStarted, setGameStarted] = useState(false);
+  const [newPlayer, setNewPlayer] = useState(false);
+
   return (
     <Wrapper>
       <GameContext.Provider
@@ -47,7 +54,10 @@ const MainView = props => {
           players,
           updatingPlayer,
           setUpdatingPlayer,
-          dispatch
+          dispatch,
+          setGameStarted,
+          newPlayer,
+          setNewPlayer
         }}
       >
         <Grid centered container>
