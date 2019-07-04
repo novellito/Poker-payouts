@@ -44,12 +44,7 @@ const Wrapper = styled.div`
 `;
 const Player = props => {
   const { buyIn, name, index } = props;
-  const {
-    gameState,
-    dispatchPlayers,
-    setPlayerToUpdate,
-    dispatchGame
-  } = useContext(GameContext);
+  const { gameState, dispatchPlayers, dispatchGame } = useContext(GameContext);
   return (
     <Wrapper>
       <Icon
@@ -69,7 +64,6 @@ const Player = props => {
           }
           basic
         >
-          {/* <Button onClick={() => setPlayerToUpdate({ ...props })} basic> */}
           + Buy In
         </Button>
       ) : (

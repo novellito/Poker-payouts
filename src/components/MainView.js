@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 `;
 
 const MainView = props => {
-  const { players, dispatchPlayers, dispatchGame } = useContext(GameContext);
+  const { players, dispatchGame } = useContext(GameContext);
   const [gameStarted, setGameStarted] = useState(false);
   const [isModalOpen, setModalStatus] = useState(false);
 

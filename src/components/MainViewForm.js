@@ -39,10 +39,8 @@ const Wrapper = styled.div`
   }
 `;
 const MainViewForm = props => {
-  const [playerToUpdate, setPlayerToUpdate] = useState(null);
+  const { setModalStatus } = props;
   const [newPlayer, setNewPlayer] = useState(false);
-  const { gameStarted, setGameStarted, setModalStatus } = props;
-  // const [gameStarted, setGameStarted] = useState(false);
   const [playerName, setPlayerName] = useState('');
   const [buyInAmt, setBuyInAmt] = useState('');
   const { players, dispatchPlayers, gameState, dispatchGame } = useContext(
@@ -127,7 +125,6 @@ const MainViewForm = props => {
         <Button
           onClick={() => {
             dispatchGame({ type: 'CLEAR_PLAYER_TO_UPDATE' });
-            // setPlayerToUpdate(null);
             setNewPlayer(false);
           }}
           basic
