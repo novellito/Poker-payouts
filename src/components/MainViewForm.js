@@ -38,21 +38,16 @@ const Wrapper = styled.div`
     font-size: 0.9em;
   }
 `;
-const Form = props => {
-  const {
-    players,
-    setPlayerToUpdate,
-    playerToUpdate,
-    gameStarted,
-    setGameStarted,
-    newPlayer,
-    setNewPlayer,
-    dispatch
-  } = useContext(GameContext);
+const MainViewForm = props => {
+  const [playerToUpdate, setPlayerToUpdate] = useState(null);
+  const [newPlayer, setNewPlayer] = useState(false);
+  const { gameStarted, setGameStarted, setModalStatus } = props;
+  // const [gameStarted, setGameStarted] = useState(false);
   const [playerName, setPlayerName] = useState('');
   const [buyInAmt, setBuyInAmt] = useState('');
+  const { players, dispatch } = useContext(GameContext);
 
-  const addPlayer = () => {
+  const handleAddButtonClick = () => {
     if (playerToUpdate) {
       dispatch({
         type: 'UPDATE_BUYIN',
@@ -96,7 +91,11 @@ const Form = props => {
               placeholder="Amount"
             />
           </div>
-          <Button onClick={addPlayer} className="add-btn" disabled={!buyInAmt}>
+          <Button
+            onClick={handleAddButtonClick}
+            className="add-btn"
+            disabled={!buyInAmt}
+          >
             Add
           </Button>
         </>
@@ -106,7 +105,7 @@ const Form = props => {
           <Button className="new-player" onClick={() => setNewPlayer(true)}>
             New Player
           </Button>
-          <Button basic className="danger">
+          <Button onClick={setModalStatus} basic className="danger">
             End Game
           </Button>
         </>
@@ -136,4 +135,4 @@ const Form = props => {
   );
 };
 
-export default Form;
+export default MainViewForm;

@@ -1,12 +1,13 @@
-import React, { useReducer, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import Form from './Form';
+import MainViewForm from './MainViewForm';
 import { Grid } from 'semantic-ui-react';
 import Players from './Players/Players';
 import PlayerProfits from './Players/PlayerProfits';
 import PlayerPayments from './Players/PlayerPayments';
 import Modal from './Modal';
 import { GameContext } from '../context/index';
+import { withRouter } from 'react-router-dom';
 
 const Wrapper = styled.div`
   .row.form {
@@ -20,73 +21,45 @@ const Wrapper = styled.div`
     font-size: 2.8em;
   }
 `;
-const playersReducer = (state, action) => {
-  switch (action.type) {
-    case 'ADD_PLAYER':
-      return [...state, action.player];
 
-    case 'UPDATE_BUYIN':
-      state[action.index].buyIn =
-        parseInt(state[action.index].buyIn) + parseInt(action.buyIn);
-
-      return [...state];
-
-    case 'DELETE_PLAYER':
-      const newState = [...state];
-      newState.splice(action.index, 1);
-
-      return newState;
-    default:
-      return state;
-  }
-};
 const MainView = props => {
-  const [players, dispatch] = useReducer(playersReducer, [
-    { name: 'bob', buyIn: 12 },
-    { name: 'lol', buyIn: 12 }
-  ]);
-  // const [players, dispatch] = useReducer(playersReducer, []);
-  const [playerToUpdate, setPlayerToUpdate] = useState(null);
-  const [newPlayer, setNewPlayer] = useState(false);
+  const { players, dispatch } = useContext(GameContext);
   const [gameStarted, setGameStarted] = useState(false);
+  const [isModalOpen, setModalStatus] = useState(false);
 
   return (
     <Wrapper>
-      <GameContext.Provider
-        value={{
-          gameStarted,
-          players,
-          playerToUpdate,
-          setPlayerToUpdate,
-          dispatch,
-          setGameStarted,
-          newPlayer,
-          setNewPlayer
-        }}
-      >
-        <Grid centered container>
-          <Modal open={true} />
-          <Grid.Row>
-            <Grid.Column verticalAlign="middle">
-              {players.length === 0 && (
-                <p className="empty-player-text">
-                  Add 2 players to start the game
-                </p>
-              )}
-              <Players />
-              {/* <PlayerProfits />
+      <Grid centered container>
+        <Modal
+          showPlayerProfits={() => props.history.push('/playerProfits')}
+          open={isModalOpen}
+          setModalStatus={() => setModalStatus(false)}
+        />
+        <Grid.Row>
+          <Grid.Column verticalAlign="middle">
+            {players.length === 0 && (
+              <p className="empty-player-text">
+                Add 2 players to start the game
+              </p>
+            )}
+            <Players />
+            {/* <PlayerProfits/> */}
+            {/* <PlayerProfits />
               <PlayerPayments /> */}
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row className="form">
-            <Grid.Column verticalAlign="middle">
-              <Form />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </GameContext.Provider>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row className="form">
+          <Grid.Column verticalAlign="middle">
+            <MainViewForm
+              gameStarted={gameStarted}
+              setGameStarted={setGameStarted}
+              setModalStatus={() => setModalStatus(true)}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </Wrapper>
   );
 };
 
-export default MainView;
+export default withRouter(MainView);
