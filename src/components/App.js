@@ -7,6 +7,7 @@ import Help from './Help';
 import About from './About';
 import { GameContext } from '../context/index';
 import PlayerProfits from './Players/PlayerProfits';
+
 const playersReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_PLAYER':
@@ -15,20 +16,17 @@ const playersReducer = (state, action) => {
     case 'UPDATE_BUYIN':
       state[action.index].buyIn =
         parseInt(state[action.index].buyIn) + parseInt(action.buyIn);
-
       return [...state];
 
     case 'DELETE_PLAYER':
       const newState = [...state];
       newState.splice(action.index, 1);
       return newState;
-    case 'SET_FINAL_TOTAL':
-      // const newState = [...state];
-      // newState.splice(action.index, 1);
-      state[action.playerIndex].finalTotal = action.finalTotal;
 
+    case 'SET_FINAL_TOTAL':
+      state[action.playerIndex].finalTotal = action.finalTotal;
       return state;
-    // return newState;
+
     default:
       return state;
   }
@@ -38,11 +36,13 @@ const gameActionsReducer = (state, action) => {
   switch (action.type) {
     case 'SET_GAME_STARTED':
       return { ...state, started: true };
+
     case 'END_GAME':
       return { ...state, started: false };
+
     case 'SET_PLAYER_TO_UPDATE':
-      console.log(action.playerToUpdate);
       return { ...state, playerToUpdate: action.playerToUpdate };
+
     case 'CLEAR_PLAYER_TO_UPDATE':
       return { ...state, playerToUpdate: null };
 
