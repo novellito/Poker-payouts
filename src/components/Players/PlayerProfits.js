@@ -49,7 +49,7 @@ const Player = (
   </div>
 );
 const PlayerProfits = props => {
-  const { players, dispatch } = useContext(GameContext);
+  const { players, dispatchPlayers } = useContext(GameContext);
   const [expectedTotalPot, setExpectedTotalPot] = useState(
     players.reduce((acc, cv) => acc.buyIn + cv.buyIn)
   );
@@ -70,7 +70,7 @@ const PlayerProfits = props => {
           <Input
             size={'mini'}
             onBlur={e => {
-              dispatch({
+              dispatchPlayers({
                 type: 'SET_FINAL_TOTAL',
                 finalTotal: parseInt(e.target.value),
                 playerIndex: index

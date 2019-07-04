@@ -34,18 +34,39 @@ const playersReducer = (state, action) => {
   }
 };
 
+const gameActionsReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_GAME_STARTED':
+      return { ...state, started: true };
+    case 'END_GAME':
+      return { ...state, started: false };
+    case 'SET_PLAYER_TO_UPDATE':
+      console.log(action.playerToUpdate);
+      return { ...state, playerToUpdate: action.playerToUpdate };
+    case 'CLEAR_PLAYER_TO_UPDATE':
+      return { ...state, playerToUpdate: null };
+
+    default:
+      return state;
+  }
+};
+
 const App = () => {
-  const [players, dispatch] = useReducer(playersReducer, [
+  const [players, dispatchPlayers] = useReducer(playersReducer, [
     { name: 'bob', buyIn: 12 },
     { name: 'lol', buyIn: 12 }
   ]);
-  // const [players, dispatch] = useReducer(playersReducer, []);
+  const [gameState, dispatchGame] = useReducer(gameActionsReducer, {
+    started: false
+  });
 
   return (
     <>
       <Navbar />
       <Switch>
-        <GameContext.Provider value={{ players, dispatch }}>
+        <GameContext.Provider
+          value={{ players, dispatchPlayers, gameState, dispatchGame }}
+        >
           <Route exact path="/" component={MainView} />
           <Route exact path="/playerProfits" component={PlayerProfits} />
           {/* <Route exact path="/winners" component={Winners} /> */}

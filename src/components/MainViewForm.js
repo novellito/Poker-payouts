@@ -45,18 +45,20 @@ const MainViewForm = props => {
   // const [gameStarted, setGameStarted] = useState(false);
   const [playerName, setPlayerName] = useState('');
   const [buyInAmt, setBuyInAmt] = useState('');
-  const { players, dispatch } = useContext(GameContext);
+  const { players, dispatchPlayers, gameState, dispatchGame } = useContext(
+    GameContext
+  );
 
   const handleAddButtonClick = () => {
-    if (playerToUpdate) {
-      dispatch({
+    if (gameState.playerToUpdate) {
+      dispatchPlayers({
         type: 'UPDATE_BUYIN',
-        index: playerToUpdate.index,
+        index: gameState.playerToUpdate.index,
         buyIn: buyInAmt
       });
-      setPlayerToUpdate(null);
+      dispatchGame({ type: 'CLEAR_PLAYER_TO_UPDATE' });
     } else {
-      dispatch({
+      dispatchPlayers({
         type: 'ADD_PLAYER',
         player: { name: playerName, buyIn: buyInAmt }
       });
@@ -67,7 +69,7 @@ const MainViewForm = props => {
   };
   return (
     <Wrapper>
-      {(!gameStarted || newPlayer) && (
+      {(!gameState.started || newPlayer) && (
         <div className="player-name">
           <Input
             value={playerName}
@@ -78,10 +80,12 @@ const MainViewForm = props => {
           />
         </div>
       )}
-      {(!gameStarted || playerToUpdate || newPlayer) && (
+      {(!gameState.started || gameState.playerToUpdate || newPlayer) && (
         <>
           <div className="buyin-amt">
-            {playerToUpdate && <p>Extra Buy In for {playerToUpdate.name}</p>}
+            {gameState.playerToUpdate && (
+              <p>Extra Buy In for {gameState.playerToUpdate.name}</p>
+            )}
             <Input
               value={buyInAmt}
               onChange={e => setBuyInAmt(e.target.value)}
@@ -100,7 +104,7 @@ const MainViewForm = props => {
           </Button>
         </>
       )}
-      {gameStarted && !playerToUpdate && !newPlayer && (
+      {gameState.started && !gameState.playerToUpdate && !newPlayer && (
         <>
           <Button className="new-player" onClick={() => setNewPlayer(true)}>
             New Player
@@ -110,19 +114,20 @@ const MainViewForm = props => {
           </Button>
         </>
       )}
-      {!gameStarted && (
+      {!gameState.started && (
         <Button
-          onClick={() => setGameStarted(true)}
+          onClick={() => dispatchGame({ type: 'SET_GAME_STARTED' })}
           disabled={players.length < 2}
           basic
         >
           Start
         </Button>
       )}
-      {(newPlayer || playerToUpdate) && (
+      {(newPlayer || gameState.playerToUpdate) && (
         <Button
           onClick={() => {
-            setPlayerToUpdate(null);
+            dispatchGame({ type: 'CLEAR_PLAYER_TO_UPDATE' });
+            // setPlayerToUpdate(null);
             setNewPlayer(false);
           }}
           basic

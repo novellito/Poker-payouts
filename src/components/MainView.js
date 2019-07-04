@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 `;
 
 const MainView = props => {
-  const { players, dispatch } = useContext(GameContext);
+  const { players, dispatchPlayers, dispatchGame } = useContext(GameContext);
   const [gameStarted, setGameStarted] = useState(false);
   const [isModalOpen, setModalStatus] = useState(false);
 
@@ -31,7 +31,10 @@ const MainView = props => {
     <Wrapper>
       <Grid centered container>
         <Modal
-          showPlayerProfits={() => props.history.push('/playerProfits')}
+          showPlayerProfits={() => {
+            dispatchGame({ type: 'END_GAME' });
+            props.history.push('/playerProfits');
+          }}
           open={isModalOpen}
           setModalStatus={() => setModalStatus(false)}
         />
