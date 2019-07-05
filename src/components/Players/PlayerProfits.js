@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Icon, Input } from 'semantic-ui-react';
 import styled from 'styled-components';
+import { GameContext } from '../../context';
 import {
   PrimaryPurple,
   Danger,
   Green,
   TertiaryPurple
 } from '../../constants/AppColors';
-import { GameContext } from '../../context';
 
 const Wrapper = styled.div`
   .player-container {
@@ -54,12 +54,6 @@ const PlayerProfits = props => {
     players.reduce((acc, cv) => acc.buyIn + cv.buyIn)
   );
 
-  // useEffect(() => {
-  //   console.log(players);
-  //   setExpectedTotalPot(players.reduce((acc, cv) => acc.buyIn + cv.buyIn));
-  //   console.log(expectedTotalPot);
-  // });
-
   return (
     <Wrapper>
       {players.map((player, index) => (
@@ -88,6 +82,8 @@ const PlayerProfits = props => {
         </div>
       ))}
       <p> {expectedTotalPot}</p>
+
+      {/* finish Button here */}
     </Wrapper>
   );
   // {players.map((player, index) => (
@@ -98,12 +94,5 @@ const PlayerProfits = props => {
   //     <p className="player-name">christian T.</p>
   //   </div>
   // ))}
-
-  // return (
-  //   <Wrapper>
-  //     {Player}
-  //     {Player}
-  //   </Wrapper>
-  // );
 };
 export default PlayerProfits;

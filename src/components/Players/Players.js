@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import Player from './Player';
 import { GameContext } from '../../context';
-import PlayerProfits from './PlayerProfits';
-import PlayerPayments from './PlayerPayments';
 
 const Players = props => {
   const { players } = useContext(GameContext);
