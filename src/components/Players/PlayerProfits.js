@@ -13,6 +13,7 @@ const Wrapper = styled.div`
   text-align: center;
 
   .player-container {
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,69 +85,90 @@ const PlayerProfits = props => {
     buyIn: acc.buyIn + cv.buyIn
   }));
   const [validatedTotal, setValidatedTotal] = useState();
+  const [isPlayerProfitsShown, setShowPlayerProfits] = useState(false);
 
   const validatePlayerTotals = () => {
-    const checkedTotal = players
+    const { finalTotal } = players
       .filter(elem => elem.finalTotal)
-      .reduce((acc, cv) => acc.finalTotal + cv.finalTotal);
+      .reduce((acc, cv) => ({ finalTotal: acc.finalTotal + cv.finalTotal }), {
+        finalTotal: 0
+      });
+    setValidatedTotal(finalTotal);
 
-    setValidatedTotal(checkedTotal.finalTotal || checkedTotal);
-    if (checkedTotal === buyIn) {
+    if (finalTotal === buyIn) {
       setValaidPlayerVals(true);
     }
   };
 
+  const showPlayerProfits = () => {
+    setShowPlayerProfits(true);
+  };
+
   return (
     <Wrapper>
-      {players.map((player, index) => (
-        <div className="player-totals-container" key={index}>
-          {/* <Icon name="arrow alternate circle up outline" size="big" /> */}
-          {/* <Icon name="arrow alternate circle down outline" size="big" /> */}
-          <p>{player.name}'s final total</p>
-          <Input
-            size={'mini'}
-            // value={players[index].finalTotal }
-            onBlur={e => {
-              dispatchPlayers({
-                type: 'SET_FINAL_TOTAL',
-                finalTotal: parseInt(e.target.value),
-                playerIndex: index
-              });
-            }}
-            name="buyin"
-            label={{ icon: 'dollar' }}
-            type="number"
-            placeholder="Amount"
-          />
-          {/* <p className="profit">$10</p> */}
-          {/* <p className="player-name">christian T.</p> */}
-        </div>
-      ))}
-      {validatedTotal && (
-        <p className="validated-total">Validtated Total: ${validatedTotal}</p>
+      {!isPlayerProfitsShown && (
+        <>
+          {players.map((player, index) => (
+            <div className="player-totals-container" key={index}>
+              {/* <Icon name="arrow alternate circle up outline" size="big" /> */}
+              {/* <Icon name="arrow alternate circle down outline" size="big" /> */}
+              <p>{player.name}'s final total</p>
+              <Input
+                size={'mini'}
+                // value={players[index].finalTotal }
+                // disabled={}
+                onBlur={e => {
+                  dispatchPlayers({
+                    type: 'SET_FINAL_TOTAL',
+                    finalTotal: parseInt(e.target.value),
+                    playerIndex: index
+                  });
+                }}
+                name="buyin"
+                label={{ icon: 'dollar' }}
+                type="number"
+                placeholder="Amount"
+              />
+              {/* <p className="profit">$10</p> */}
+              {/* <p className="player-name">christian T.</p> */}
+            </div>
+          ))}
+          {(validatedTotal || validatedTotal === 0) && (
+            <p className="validated-total">
+              Validtated Total: ${validatedTotal}
+            </p>
+          )}
+          <p className="expected-total">Expected Total ${buyIn}</p>
+          <div className="buttons-section">
+            <Button onClick={validatePlayerTotals} basic>
+              Validate
+            </Button>
+            <Button
+              onClick={showPlayerProfits}
+              className="add-btn"
+              disabled={!isValidPlayerVals}
+            >
+              Get Profits
+            </Button>
+          </div>
+        </>
       )}
-      <p className="expected-total">Expected Total ${buyIn}</p>
-      <div className="buttons-section">
-        <Button onClick={validatePlayerTotals} basic>
-          Validate
-        </Button>
-        <Button
-          // onClick={handleAddButtonClick}
-          className="add-btn"
-          disabled={!isValidPlayerVals}
-        >
-          Get Profits
-        </Button>
-      </div>
+
+      {isPlayerProfitsShown &&
+        players.map((player, index) => (
+          <div className="player-container" key={index}>
+            {player.finalTotal - player.buyIn > 0 ? (
+              <Icon name="arrow alternate circle up outline" size="big" />
+            ) : (
+              <Icon name="arrow alternate circle down outline" size="big" />
+            )}
+            <p className="profit">
+              ${Math.abs(player.finalTotal - player.buyIn)}
+            </p>
+            <p className="player-name">christian T.</p>
+          </div>
+        ))}
     </Wrapper>
   );
-  // {players.map((player, index) => (
-  //   <div className="player-container">
-  //     <Icon name="arrow alternate circle up outline" size="big" />
-  //     {/* <Icon name="arrow alternate circle down outline" size="big" /> */}
-  //     <p className="profit">$10</p>
-  //     <p className="player-name">christian T.</p>
-  //   </div>
-  // ))}
 };
 export default PlayerProfits;

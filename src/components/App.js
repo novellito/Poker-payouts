@@ -12,15 +12,15 @@ import { playersReducer, gameActionsReducer } from '../reducers/reducers';
 const App = () => {
   const [players, dispatchPlayers] = useReducer(playersReducer, [
     { name: 'bob', buyIn: 12 },
-    { name: 'lol', buyIn: 12 },
-    { name: 'bob', buyIn: 12 }
-    // { name: 'lol', buyIn: 12 },
+    { name: 'lol', buyIn: 12 }
     // { name: 'bob', buyIn: 12 },
     // { name: 'lol', buyIn: 12 },
     // { name: 'bob', buyIn: 12 },
     // { name: 'lol', buyIn: 12 },
     // { name: 'bob', buyIn: 12 },
     // { name: 'lol', buyIn: 12 },
+    // { name: 'bob', buyIn: 12 },
+    // { name: 'lol', buyIn: 12 }
   ]);
   const [gameState, dispatchGame] = useReducer(gameActionsReducer, {
     started: false
