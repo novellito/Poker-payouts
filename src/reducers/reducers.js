@@ -14,6 +14,7 @@ export const playersReducer = (state, action) => {
       return newState;
 
     case 'SET_FINAL_TOTAL':
+      // if()
       state[action.playerIndex].finalTotal = action.finalTotal;
       return state;
 

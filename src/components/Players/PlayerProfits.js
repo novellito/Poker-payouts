@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import { Button, Icon, Input } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { GameContext } from '../../context';
@@ -10,6 +10,8 @@ import {
 } from '../../constants/AppColors';
 
 const Wrapper = styled.div`
+  text-align: center;
+
   .player-container {
     display: flex;
     justify-content: center;
@@ -39,6 +41,33 @@ const Wrapper = styled.div`
       margin-bottom: 0;
     }
   }
+  .ui.label > .icon {
+    width: auto;
+    margin: 0;
+  }
+  .expected-total,
+  .validated-total {
+    font-size: 1.4em;
+    margin-bottom: 0;
+  }
+  .buttons-section {
+    margin: 10px 0 20px 0;
+  }
+  .ui.button {
+    background-color: ${PrimaryPurple};
+    color: white;
+    &:first-of-type {
+      margin-right: 10px;
+    }
+    &.basic {
+      color: ${Green}!important;
+      box-shadow: 0 0 0 1px ${Green} inset;
+    }
+    &.danger {
+      color: ${Danger}!important;
+      box-shadow: 0 0 0 1px ${Danger} inset;
+    }
+  }
 `;
 const Player = (
   <div className="player-container">
@@ -50,9 +79,22 @@ const Player = (
 );
 const PlayerProfits = props => {
   const { players, dispatchPlayers } = useContext(GameContext);
-  const [expectedTotalPot, setExpectedTotalPot] = useState(
-    players.reduce((acc, cv) => acc.buyIn + cv.buyIn)
-  );
+  const [isValidPlayerVals, setValaidPlayerVals] = useState(false);
+  const { buyIn } = players.reduce((acc, cv) => ({
+    buyIn: acc.buyIn + cv.buyIn
+  }));
+  const [validatedTotal, setValidatedTotal] = useState();
+
+  const validatePlayerTotals = () => {
+    const checkedTotal = players
+      .filter(elem => elem.finalTotal)
+      .reduce((acc, cv) => acc.finalTotal + cv.finalTotal);
+
+    setValidatedTotal(checkedTotal.finalTotal || checkedTotal);
+    if (checkedTotal === buyIn) {
+      setValaidPlayerVals(true);
+    }
+  };
 
   return (
     <Wrapper>
@@ -63,14 +105,13 @@ const PlayerProfits = props => {
           <p>{player.name}'s final total</p>
           <Input
             size={'mini'}
+            // value={players[index].finalTotal }
             onBlur={e => {
               dispatchPlayers({
                 type: 'SET_FINAL_TOTAL',
                 finalTotal: parseInt(e.target.value),
                 playerIndex: index
               });
-              setExpectedTotalPot(expectedTotalPot - parseInt(e.target.value));
-              console.log(players);
             }}
             name="buyin"
             label={{ icon: 'dollar' }}
@@ -81,9 +122,22 @@ const PlayerProfits = props => {
           {/* <p className="player-name">christian T.</p> */}
         </div>
       ))}
-      <p> {expectedTotalPot}</p>
-
-      {/* finish Button here */}
+      {validatedTotal && (
+        <p className="validated-total">Validtated Total: ${validatedTotal}</p>
+      )}
+      <p className="expected-total">Expected Total ${buyIn}</p>
+      <div className="buttons-section">
+        <Button onClick={validatePlayerTotals} basic>
+          Validate
+        </Button>
+        <Button
+          // onClick={handleAddButtonClick}
+          className="add-btn"
+          disabled={!isValidPlayerVals}
+        >
+          Get Profits
+        </Button>
+      </div>
     </Wrapper>
   );
   // {players.map((player, index) => (
