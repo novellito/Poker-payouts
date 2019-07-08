@@ -108,7 +108,6 @@ const Navbar = props => {
       />
     </>
   );
-
   return (
     <Wrapper id="navbar">
       <Menu stackable>

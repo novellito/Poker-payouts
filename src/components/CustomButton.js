@@ -26,16 +26,7 @@ const StyledButton = styled(MyButton)`
 `;
 
 const CustomBtn = props => {
-  return (
-    <>
-      <StyledButton
-        click={() => props.click()}
-        text={props.text}
-        className={props.className}
-        disabled={props.disabled}
-      />
-    </>
-  );
+  return <StyledButton {...props} />;
 };
 
 export default CustomBtn;

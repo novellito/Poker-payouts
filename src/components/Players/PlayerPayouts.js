@@ -1,12 +1,7 @@
 import React from 'react';
 import { Button, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
-import {
-  PrimaryPurple,
-  Danger,
-  Green,
-  TertiaryPurple
-} from '../../constants/AppColors';
+import { PrimaryPurple } from '../../constants/AppColors';
 
 const Wrapper = styled.div`
   display: flex;
@@ -42,7 +37,7 @@ const Player = (
     <p className="player-name">christian T.</p>
   </>
 );
-const PlayerPayments = props => {
+const PlayerPayouts = props => {
   return <Wrapper>{Player}</Wrapper>;
 };
-export default PlayerPayments;
+export default PlayerPayouts;

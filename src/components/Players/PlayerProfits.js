@@ -4,6 +4,7 @@ import CustomButton from '../CustomButton';
 import styled from 'styled-components';
 import { GameContext } from '../../context';
 import { PrimaryPurple, Danger, Green } from '../../constants/AppColors';
+import { withRouter } from 'react-router-dom';
 
 const Wrapper = styled.div`
   text-align: center;
@@ -53,30 +54,31 @@ const Wrapper = styled.div`
     margin: 10px 0 20px 0;
   }
 `;
-const PlayerProfits = props => {
-  const { players, dispatchPlayers } = useContext(GameContext);
-  const [isValidPlayerVals, setValaidPlayerVals] = useState(false);
-  const { buyIn } = players.reduce((acc, cv) => ({
+const sumPlayerBuyins = players =>
+  players.reduce((acc, cv) => ({
     buyIn: acc.buyIn + cv.buyIn
   }));
+
+const sumFinalTotals = players =>
+  players
+    .filter(elem => elem.finalTotal)
+    .reduce((acc, cv) => ({ finalTotal: acc.finalTotal + cv.finalTotal }), {
+      finalTotal: 0
+    });
+
+const PlayerProfits = props => {
+  const { players, dispatchPlayers } = useContext(GameContext);
+  const { buyIn } = sumPlayerBuyins(players);
+  const [isValidPlayerVals, setValidPlayerVals] = useState(false);
   const [validatedTotal, setValidatedTotal] = useState();
   const [isPlayerProfitsShown, setShowPlayerProfits] = useState(false);
 
   const validatePlayerTotals = () => {
-    const { finalTotal } = players
-      .filter(elem => elem.finalTotal)
-      .reduce((acc, cv) => ({ finalTotal: acc.finalTotal + cv.finalTotal }), {
-        finalTotal: 0
-      });
+    const { finalTotal } = sumFinalTotals(players);
     setValidatedTotal(finalTotal);
-
     if (finalTotal === buyIn) {
-      setValaidPlayerVals(true);
+      setValidPlayerVals(true);
     }
-  };
-
-  const showPlayerProfits = () => {
-    setShowPlayerProfits(true);
   };
 
   return (
@@ -114,7 +116,7 @@ const PlayerProfits = props => {
               className="basic"
             />
             <CustomButton
-              click={showPlayerProfits}
+              click={() => setShowPlayerProfits(true)}
               text="Get Profits"
               disabled={!isValidPlayerVals}
             />
@@ -138,7 +140,7 @@ const PlayerProfits = props => {
             </div>
           ))}
           <CustomButton
-            // click={showPlayerProfits}
+            click={() => props.history.push('/playerPayouts')}
             text="Payouts Page"
           />
         </>
@@ -146,4 +148,4 @@ const PlayerProfits = props => {
     </Wrapper>
   );
 };
-export default PlayerProfits;
+export default withRouter(PlayerProfits);
