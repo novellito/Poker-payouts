@@ -8,10 +8,6 @@ import { GameContext } from '../context/index';
 import { withRouter } from 'react-router-dom';
 
 const Wrapper = styled.div`
-  .row.form {
-    position: absolute;
-    bottom: 30px;
-  }
   .ui.centered.grid {
     margin: auto;
   }
