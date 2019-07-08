@@ -7,7 +7,6 @@ import { PrimaryPurple, Danger, Green } from '../../constants/AppColors';
 
 const Wrapper = styled.div`
   text-align: center;
-
   .player-container {
     margin-top: 10px;
     display: flex;
@@ -28,7 +27,6 @@ const Wrapper = styled.div`
       color: ${Green};
     }
   }
-
   .player-totals-container {
     display: flex;
     flex-direction: column;
@@ -37,6 +35,10 @@ const Wrapper = styled.div`
     p {
       margin-bottom: 0;
     }
+  }
+  .ui.labeled.input > .label {
+    background-color: ${PrimaryPurple};
+    color: white;
   }
   .ui.label > .icon {
     width: auto;
@@ -85,7 +87,6 @@ const PlayerProfits = props => {
             <div className="player-totals-container" key={index}>
               <p>{player.name}'s final total</p>
               <Input
-                size={'mini'}
                 onBlur={e => {
                   dispatchPlayers({
                     type: 'SET_FINAL_TOTAL',

@@ -11,6 +11,7 @@ const MyButton = ({ click, className, disabled, text }) => (
 
 const StyledButton = styled(MyButton)`
   &.ui.button {
+    margin: 5px 5px;
     background-color: ${PrimaryPurple};
     color: white;
     &.basic {

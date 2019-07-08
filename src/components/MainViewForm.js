@@ -14,14 +14,9 @@ const Wrapper = styled.div`
     background-color: ${PrimaryPurple};
     color: white;
   }
-
   .player-name,
   .buyin-amt {
     margin-bottom: 20px;
-  }
-  .add-btn,
-  .new-player {
-    margin-right: 10px;
   }
   p {
     margin-bottom: 5px;
