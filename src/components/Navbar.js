@@ -25,6 +25,9 @@ const Wrapper = styled.nav`
     .desktop-nav {
       display: none;
     }
+    .right.item a {
+      color: white;
+    }
   }
   .content.big.icon.nav-icon,
   .close.big.icon.nav-icon {
@@ -72,7 +75,9 @@ const Navbar = props => {
 
   const NavLinks = (
     <>
-      <Menu.Item position="right">Reset Game</Menu.Item>
+      <Menu.Item position="right">
+        <a href="/">Reset Game</a>
+      </Menu.Item>
       <Menu.Item
         name="desktop-navimonials"
         as={() => (
