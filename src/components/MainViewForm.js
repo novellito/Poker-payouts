@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { Input, Button } from 'semantic-ui-react';
-import { PrimaryPurple, Green, Danger } from '../constants/AppColors';
+import { Input } from 'semantic-ui-react';
+import { PrimaryPurple } from '../constants/AppColors';
 import { GameContext } from '../context';
+import CustomButton from './CustomButton';
 
 const Wrapper = styled.div`
   .ui.label > .icon {
@@ -13,18 +14,7 @@ const Wrapper = styled.div`
     background-color: ${PrimaryPurple};
     color: white;
   }
-  .ui.button {
-    background-color: ${PrimaryPurple};
-    color: white;
-    &.basic {
-      color: ${Green}!important;
-      box-shadow: 0 0 0 1px ${Green} inset;
-    }
-    &.danger {
-      color: ${Danger}!important;
-      box-shadow: 0 0 0 1px ${Danger} inset;
-    }
-  }
+
   .player-name,
   .buyin-amt {
     margin-bottom: 20px;
@@ -93,45 +83,40 @@ const MainViewForm = props => {
               placeholder="Amount"
             />
           </div>
-          <Button
-            onClick={handleAddButtonClick}
-            className="add-btn"
+          <CustomButton
+            click={handleAddButtonClick}
+            text="Add"
             disabled={!buyInAmt}
-          >
-            Add
-          </Button>
+          />
         </>
       )}
       {gameState.started && !gameState.playerToUpdate && !newPlayer && (
         <>
-          <Button className="new-player" onClick={() => setNewPlayer(true)}>
-            New Player
-          </Button>
-          <Button onClick={setModalStatus} basic className="danger">
-            End Game
-          </Button>
+          <CustomButton click={() => setNewPlayer(true)} text="New Player" />
+          <CustomButton
+            click={setModalStatus}
+            text="End Game"
+            className="basic danger"
+          />
         </>
       )}
       {!gameState.started && (
-        <Button
-          onClick={() => dispatchGame({ type: 'SET_GAME_STARTED' })}
+        <CustomButton
+          click={() => dispatchGame({ type: 'SET_GAME_STARTED' })}
+          text="Start"
           disabled={players.length < 2}
-          basic
-        >
-          Start
-        </Button>
+          className="basic"
+        />
       )}
       {(newPlayer || gameState.playerToUpdate) && (
-        <Button
-          onClick={() => {
+        <CustomButton
+          click={() => {
             dispatchGame({ type: 'CLEAR_PLAYER_TO_UPDATE' });
             setNewPlayer(false);
           }}
-          basic
-          className="danger"
-        >
-          Cancel
-        </Button>
+          text="Cancel"
+          className="basic danger"
+        />
       )}
     </Wrapper>
   );

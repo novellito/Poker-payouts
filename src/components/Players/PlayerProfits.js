@@ -1,13 +1,9 @@
-import React, { useContext, useState, useRef } from 'react';
-import { Button, Icon, Input } from 'semantic-ui-react';
+import React, { useContext, useState } from 'react';
+import { Icon, Input } from 'semantic-ui-react';
+import CustomButton from '../CustomButton';
 import styled from 'styled-components';
 import { GameContext } from '../../context';
-import {
-  PrimaryPurple,
-  Danger,
-  Green,
-  TertiaryPurple
-} from '../../constants/AppColors';
+import { PrimaryPurple, Danger, Green } from '../../constants/AppColors';
 
 const Wrapper = styled.div`
   text-align: center;
@@ -54,30 +50,7 @@ const Wrapper = styled.div`
   .buttons-section {
     margin: 10px 0 20px 0;
   }
-  .ui.button {
-    background-color: ${PrimaryPurple};
-    color: white;
-    &:first-of-type {
-      margin-right: 10px;
-    }
-    &.basic {
-      color: ${Green}!important;
-      box-shadow: 0 0 0 1px ${Green} inset;
-    }
-    &.danger {
-      color: ${Danger}!important;
-      box-shadow: 0 0 0 1px ${Danger} inset;
-    }
-  }
 `;
-const Player = (
-  <div className="player-container">
-    <Icon name="arrow alternate circle up outline" size="big" />
-    {/* <Icon name="arrow alternate circle down outline" size="big" /> */}
-    <p className="profit">$10</p>
-    <p className="player-name">christian T.</p>
-  </div>
-);
 const PlayerProfits = props => {
   const { players, dispatchPlayers } = useContext(GameContext);
   const [isValidPlayerVals, setValaidPlayerVals] = useState(false);
@@ -110,13 +83,9 @@ const PlayerProfits = props => {
         <>
           {players.map((player, index) => (
             <div className="player-totals-container" key={index}>
-              {/* <Icon name="arrow alternate circle up outline" size="big" /> */}
-              {/* <Icon name="arrow alternate circle down outline" size="big" /> */}
               <p>{player.name}'s final total</p>
               <Input
                 size={'mini'}
-                // value={players[index].finalTotal }
-                // disabled={}
                 onBlur={e => {
                   dispatchPlayers({
                     type: 'SET_FINAL_TOTAL',
@@ -129,8 +98,6 @@ const PlayerProfits = props => {
                 type="number"
                 placeholder="Amount"
               />
-              {/* <p className="profit">$10</p> */}
-              {/* <p className="player-name">christian T.</p> */}
             </div>
           ))}
           {(validatedTotal || validatedTotal === 0) && (
@@ -140,34 +107,41 @@ const PlayerProfits = props => {
           )}
           <p className="expected-total">Expected Total ${buyIn}</p>
           <div className="buttons-section">
-            <Button onClick={validatePlayerTotals} basic>
-              Validate
-            </Button>
-            <Button
-              onClick={showPlayerProfits}
-              className="add-btn"
+            <CustomButton
+              click={validatePlayerTotals}
+              text="Validate"
+              className="basic"
+            />
+            <CustomButton
+              click={showPlayerProfits}
+              text="Get Profits"
               disabled={!isValidPlayerVals}
-            >
-              Get Profits
-            </Button>
+            />
           </div>
         </>
       )}
 
-      {isPlayerProfitsShown &&
-        players.map((player, index) => (
-          <div className="player-container" key={index}>
-            {player.finalTotal - player.buyIn > 0 ? (
-              <Icon name="arrow alternate circle up outline" size="big" />
-            ) : (
-              <Icon name="arrow alternate circle down outline" size="big" />
-            )}
-            <p className="profit">
-              ${Math.abs(player.finalTotal - player.buyIn)}
-            </p>
-            <p className="player-name">christian T.</p>
-          </div>
-        ))}
+      {isPlayerProfitsShown && (
+        <>
+          {players.map((player, index) => (
+            <div className="player-container" key={index}>
+              {player.finalTotal - player.buyIn > 0 ? (
+                <Icon name="arrow alternate circle up outline" size="big" />
+              ) : (
+                <Icon name="arrow alternate circle down outline" size="big" />
+              )}
+              <p className="profit">
+                ${Math.abs(player.finalTotal - player.buyIn)}
+              </p>
+              <p className="player-name">christian T.</p>
+            </div>
+          ))}
+          <CustomButton
+            // click={showPlayerProfits}
+            text="Payouts Page"
+          />
+        </>
+      )}
     </Wrapper>
   );
 };
