@@ -1,17 +1,16 @@
 import React from 'react';
-import { Button, Icon } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { PrimaryPurple } from '../../constants/AppColors';
-
+import CustomButton from '../CustomButton';
 const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .profit {
-    font-size: 1.6em;
-    margin: 0 10px;
-    color: ${PrimaryPurple};
-    font-weight: bold;
+  margin-top: 40px;
+  text-align: center;
+  .player-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .player-name {
     font-size: 2em;
@@ -28,16 +27,26 @@ const Wrapper = styled.div`
   }
 `;
 const Player = (
-  <>
+  <div className="player-container">
     <p className="player-name">Christian</p>
     <div className="amt">
       <p>10$</p>
       <Icon name="arrow alternate circle right outline" size="big" />
     </div>
     <p className="player-name">christian T.</p>
-  </>
+  </div>
 );
 const PlayerPayouts = props => {
-  return <Wrapper>{Player}</Wrapper>;
+  return (
+    <Wrapper>
+      {Player}
+      {Player}
+      {Player}
+      <CustomButton
+        text="Reset Game"
+        click={() => window.location.replace('/')}
+      />
+    </Wrapper>
+  );
 };
 export default PlayerPayouts;
